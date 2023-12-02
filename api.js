@@ -112,8 +112,7 @@ export function like({ token, postId }) {
     headers: {
       Authorization: token,
     },
-  })
-  .then((response) =>{
+  }).then((response) => {
     return response.json();
   });
 }
@@ -124,8 +123,7 @@ export function dislike({ token, postId }) {
     headers: {
       Authorization: token,
     },
-  })
-  .then((response) =>{
+  }).then((response) => {
     return response.json();
   });
 }

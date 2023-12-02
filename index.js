@@ -95,26 +95,26 @@ export const goToPage = (newPage, data) => {
 };
 
 const onLikeButtonPressed = ({ postId, isLiked }) => {
-  if(isLiked){
+  if (isLiked) {
     dislike({
       token: getToken(),
-      postId: postId
+      postId: postId,
     }).then((result) => {
       let postFromApi = result.post;
-      let postIndex = posts.findIndex((value) => value.id === postFromApi.id)
+      let postIndex = posts.findIndex((value) => value.id === postFromApi.id);
       posts[postIndex] = postFromApi;
       renderApp();
-    })
-  }else{
+    });
+  } else {
     like({
       token: getToken(),
-      postId: postId
+      postId: postId,
     }).then((result) => {
       let postFromApi = result.post;
-      let postIndex = posts.findIndex((value) => value.id === postFromApi.id)
+      let postIndex = posts.findIndex((value) => value.id === postFromApi.id);
       posts[postIndex] = postFromApi;
       renderApp();
-    })
+    });
   }
 };
 
@@ -163,15 +163,15 @@ const renderApp = () => {
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
       appEl,
-      onLikeButtonPressed
-    });    
+      onLikeButtonPressed,
+    });
   }
 
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
     return renderPostsPageComponent({
       appEl,
-      onLikeButtonPressed
+      onLikeButtonPressed,
     });
   }
 };

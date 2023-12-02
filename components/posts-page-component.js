@@ -3,6 +3,7 @@ import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 import { formatDistanceToNow } from "date-fns";
 import { ru } from "date-fns/locale";
+import { escape } from "lodash";
 
 export function renderPostsPageComponent({ appEl, onLikeButtonPressed }) {
   const renderedPosts = posts.map(renderPost).join("\n");
@@ -47,15 +48,15 @@ const renderPost = (post) => {
   <li class="post">
    <div class="post-header" data-user-id="${post.user.id}">
     <img src="${post.user.imageUrl}" class="post-header__user-image">
-    <p class="post-header__user-name">${post.user.name}</p>
+    <p class="post-header__user-name">${escape(post.user.name)}</p>
    </div>
    <div class="post-image-container">
     <img class="post-image" src="${post.imageUrl}">
    </div>
    <div class="post-likes">
     <button data-post-id="${post.id}" data-is-liked="${
-    post.isLiked
-  }" class="like-button">
+      post.isLiked
+    }" class="like-button">
     <img src="${getLikeImg(post.isLiked)}">
     </button>
     <p class="post-likes-text">
@@ -63,11 +64,11 @@ const renderPost = (post) => {
     </p>
    </div>
    <p class="post-text">
-    <span class="user-name">${post.user.name}</span>
-    ${post.description}
+    <span class="user-name">${escape(post.user.name)}</span>
+    ${escape(post.description)}
    </p>
    <p class="post-date">
-   ${formatDistanceToNow(post.createdAt,  {locale: ru, addSuffix: true})}
+   ${formatDistanceToNow(post.createdAt, { locale: ru, addSuffix: true })}
    </p>
   </li>
   `;

@@ -4,7 +4,7 @@ import { uploadImage } from "../api.js";
 
 export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   const render = () => {
-    let loadingImageUrl ;
+    let loadingImageUrl;
 
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
@@ -39,11 +39,11 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
 
     document.getElementById("add-button").addEventListener("click", () => {
       const description = document.getElementById("photo-text").value;
-      if ( description === null || description.trim() === "" ) {
+      if (description === null || description.trim() === "") {
         alert("Соси бибу, пиши текст");
         return;
       }
-      if ( loadingImageUrl === undefined) {
+      if (loadingImageUrl === undefined) {
         alert("Соси бибу, грузи фото");
         return;
       }
@@ -55,6 +55,4 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
   };
 
   render();
-};
-
-
+}
