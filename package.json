@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "lint:js": "eslint ./*.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.1.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "date-fns": "^3.0.0-alpha.2",
+    "lodash": "^4.17.21"
+  }
+}
