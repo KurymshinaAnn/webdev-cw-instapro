@@ -2,7 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, onLikeButtonPressed }) {
   const renderedPosts = posts.map(renderPost).join("\n");
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
@@ -29,6 +29,15 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
+
+  for (let likeEl of document.querySelectorAll(".like-button")) {
+    likeEl.addEventListener("click", () => {
+      onLikeButtonPressed({
+        postId: likeEl.dataset.postId,
+        isLiked: likeEl.dataset.isLiked === 'true',
+      });
+    });
+  }
 }
 
 const renderPost = (post) => {
@@ -42,7 +51,7 @@ const renderPost = (post) => {
     <img class="post-image" src="${post.imageUrl}">
    </div>
    <div class="post-likes">
-    <button data-post-id="${post.id}" class="like-button">
+    <button data-post-id="${post.id}" data-is-liked="${post.isLiked}" class="like-button">
     <img src="${getLikeImg(post.isLiked)}">
     </button>
     <p class="post-likes-text">

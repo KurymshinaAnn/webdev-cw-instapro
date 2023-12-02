@@ -105,3 +105,27 @@ export function createPost({ token, description, imageUrl }) {
     return response.json();
   });
 }
+
+export function like({ token, postId }) {
+  return fetch(postsHost + `/${postId}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) =>{
+    return response.json();
+  });
+}
+
+export function dislike({ token, postId }) {
+  return fetch(postsHost + `/${postId}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) =>{
+    return response.json();
+  });
+}

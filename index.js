@@ -1,4 +1,4 @@
-import { getPosts, createPost, getUserPosts } from "./api.js";
+import { getPosts, createPost, getUserPosts, like, dislike } from "./api.js";
 import { renderAddPostPageComponent } from "./components/add-post-page-component.js";
 import { renderAuthPageComponent } from "./components/auth-page-component.js";
 import {
@@ -94,6 +94,30 @@ export const goToPage = (newPage, data) => {
   throw new Error("страницы не существует");
 };
 
+const onLikeButtonPressed = ({ postId, isLiked }) => {
+  if(isLiked){
+    dislike({
+      token: getToken(),
+      postId: postId
+    }).then((result) => {
+      let postFromApi = result.post;
+      let postIndex = posts.findIndex((value) => value.id === postFromApi.id)
+      posts[postIndex] = postFromApi;
+      renderApp();
+    })
+  }else{
+    like({
+      token: getToken(),
+      postId: postId
+    }).then((result) => {
+      let postFromApi = result.post;
+      let postIndex = posts.findIndex((value) => value.id === postFromApi.id)
+      posts[postIndex] = postFromApi;
+      renderApp();
+    })
+  }
+};
+
 const renderApp = () => {
   const appEl = document.getElementById("app");
   if (page === LOADING_PAGE) {
@@ -126,11 +150,12 @@ const renderApp = () => {
           token: getToken(),
           description,
           imageUrl,
-        }).then(() => {
-          console.log("Добавляю пост...", { description, imageUrl });
-          goToPage(POSTS_PAGE);
         })
-        .catch((err) => alert(err))
+          .then(() => {
+            console.log("Добавляю пост...", { description, imageUrl });
+            goToPage(POSTS_PAGE);
+          })
+          .catch((err) => alert(err));
       },
     });
   }
@@ -138,13 +163,15 @@ const renderApp = () => {
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
       appEl,
-    });
+      onLikeButtonPressed
+    });    
   }
 
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
     return renderPostsPageComponent({
       appEl,
+      onLikeButtonPressed
     });
   }
 };
