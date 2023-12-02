@@ -1,6 +1,8 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage } from "../index.js";
+import { formatDistanceToNow } from "date-fns";
+import { ru } from "date-fns/locale";
 
 export function renderPostsPageComponent({ appEl, onLikeButtonPressed }) {
   const renderedPosts = posts.map(renderPost).join("\n");
@@ -34,7 +36,7 @@ export function renderPostsPageComponent({ appEl, onLikeButtonPressed }) {
     likeEl.addEventListener("click", () => {
       onLikeButtonPressed({
         postId: likeEl.dataset.postId,
-        isLiked: likeEl.dataset.isLiked === 'true',
+        isLiked: likeEl.dataset.isLiked === "true",
       });
     });
   }
@@ -51,7 +53,9 @@ const renderPost = (post) => {
     <img class="post-image" src="${post.imageUrl}">
    </div>
    <div class="post-likes">
-    <button data-post-id="${post.id}" data-is-liked="${post.isLiked}" class="like-button">
+    <button data-post-id="${post.id}" data-is-liked="${
+    post.isLiked
+  }" class="like-button">
     <img src="${getLikeImg(post.isLiked)}">
     </button>
     <p class="post-likes-text">
@@ -63,7 +67,7 @@ const renderPost = (post) => {
     ${post.description}
    </p>
    <p class="post-date">
-   ${post.createdAt}
+   ${formatDistanceToNow(post.createdAt,  {locale: ru, addSuffix: true})}
    </p>
   </li>
   `;
